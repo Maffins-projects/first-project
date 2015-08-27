@@ -11,7 +11,7 @@
     </div>
          To start comparing please select your provices below:
         <div class="QuestionText">
-          Moving from
+          Moving from:
         </div>
         <div class="Question">
           <select style="width:300px;" class="btn-info" name="data[SaveLead][from_province]">
@@ -25,12 +25,10 @@
             <option value="17539">North West</option>
             <option value="17540">Northern Cape</option>
             <option value="17541">Western Cape</option>
-
           </select>
         </div>
-      
         <div class="QuestionText">
-          Moving to
+          Moving to:
         </div>
         <div class="Question">
           <select style="width:300px;" class="btn-info" name="data[SaveLead][to_province]">
@@ -44,10 +42,8 @@
             <option value="17539">North West</option>
             <option value="17540">Northern Cape</option>
             <option value="17541">Western Cape</option>
-
           </select>
-                  </div>
-                
+         </div>
               <div class="QuestionText">
                 
               </div>
