@@ -8,15 +8,16 @@
 <div id="SimpleStepsMamaIndex_area5_pc">
   <div id="QuestionsOnePageControl">
     <div id="validators">
+    <input type="hidden" value="3" name="data[SaveLead][page]">
+    <h2>International move</h2>
     </div>
-         To start comparing please select your provices below:
+         To start comparing please select the <b>province</b> below:
         <div class="QuestionText">
           Moving from:
         </div>
-        <input type="hidden" value="1"  name="data[SaveLead][page]">
         <div class="Question">
-          <select style="width:300px;" class="btn-info" name="data[SaveLead][from_province]">
-            <option value="0">Please select</option>
+          <select style="width:300px;" class="btn-info" required='required' name="data[SaveLead][from_province]">
+            <option value="">Please select</option>
             <option value="17533">Eastern Cape</option>
             <option value="17534">Free State</option>
             <option value="17535">Gauteng</option>
@@ -28,23 +29,7 @@
             <option value="17541">Western Cape</option>
           </select>
         </div>
-        <div class="QuestionText">
-          Moving to:
-        </div>
-        <div class="Question">
-          <select style="width:300px;" class="btn-info" name="data[SaveLead][to_province]">
-            <option value="0">Please select</option>
-            <option value="17533">Eastern Cape</option>
-            <option value="17534">Free State</option>
-            <option value="17535">Gauteng</option>
-            <option value="17536">KwaZulu-Natal</option>
-            <option value="17537">Limpopo</option>
-            <option value="17538">Mpumalanga</option>
-            <option value="17539">North West</option>
-            <option value="17540">Northern Cape</option>
-            <option value="17541">Western Cape</option>
-          </select>
-         </div>
+
               <div class="QuestionText">
                 
               </div>
@@ -61,7 +46,7 @@
     
       </td>
       <td valign="top">
-        <img src="/removal-leads.co.za/img/home-removal.jpg" style="position: relative;left: -55px;" alt="Removals, shuttle services, cab">
+        <img src="/removal-leads.co.za/img/international-removal.jpg" style="position: relative;left: -40px;" alt="Removals, shuttle services, cab">
       </td>
     </tr>
     <tr>

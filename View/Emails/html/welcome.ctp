@@ -7,12 +7,7 @@
 <table style="border: 1px solid #000;">
 	<tr>
 		<td style="background-color: orange;font-weight: bold;">
-			Dear <?php echo $message['users']['fname']." ".$message['users']['lname']?>  <br />
-			<table>
-				<tr>
-					<td>Reference Number : <?php echo "LD".$loadid?></td>
-				</tr>
-			</table>
+			Dear <?php echo $message['Client']['fname']." ".$message['Client']['lname']?>  <br />
 		</td>
 	</tr>
 	<tr>
@@ -20,13 +15,9 @@
 			<br />  <p>
 			Thank you for choosing us to compare quotations:
       </p>
-      <p>The following companies will contact you with a quotation:   </p>
-       <?php
-        foreach($companies as $comp)
-        {
-          echo "<b>".$comp."</b><br />";
-        }
-       ?>
+      <p>
+       PLEASE NOTE THAT COMPANIES AFFILIATED WITH US WILL BE CONTACTING YOU SHORTLY EITHER BY EMAIL OR BY TELEPHONE.
+      </p>
        <i><b>Note</b> Our service is completely free</i>
      </td>
 		</tr>

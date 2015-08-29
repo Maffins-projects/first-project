@@ -5,139 +5,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <?php
   echo $this->Html->meta('icon');
-
   echo $this->Html->css('bootstrap-select.min');
   echo $this->Html->css('bootstrap');
   echo $this->Html->css('bootstrap.min');
+  echo $this->Html->css('bootstrap.icon-large.min');
   echo $this->Html->css('style');
-  echo $this->Html->css('jsDatePick_ltr.min');
-
+  echo $this->Html->css('bootstrap-datepicker.min');
+  echo $this->Html->css('bootstrap-datepicker.standalone.min');
   echo $this->fetch('meta');
-  echo $this->Html->script('jquery-1.4.2.min');
+  echo $this->Html->script('jquery-1.11.3.min');
   echo $this->Html->script('bootstrap.min');  
- // echo $this->Html->script('jquery.uniform.min');
-  
   echo $this->Html->script('jsDatePick.jquery.min.1.3') ;
-
+  echo $this->Html->script('bootstrap-datepicker.min') ;
 ?>
-<script type="text/javascript" charset="utf-8">
-  $(function(){
-   // $("input:checkbox, input:radio, input:file, select").uniform();
-  });
-</script>
-<script type="text/javascript">
-<?php
-  if($this->params['controller'] == "Loads" && $this->action == "add"):
-?> 
-  window.onload = function(){
-    new JsDatePick({
-      useMode:2,
-      target:"LoadMoveDate",
-      dateFormat:"%Y-%m-%d"
-      /*selectedDate:{        This is an example of what the full configuration offers.
-        day:5,            For full documentation about these settings please see the full version of the code.
-        month:9,
-        year:2006
-      },
-      yearsRange:[1978,2020],
-      limitToToday:false,
-      cellColorScheme:"beige",
-      dateFormat:"%m-%d-%Y",
-      imgPath:"img/",
-      weekStartDay:1*/
-    }); 
-  };
-<?php 
-  endif;
-?>  
-/****************************************************************************************************************************/
-<?php
-   if($this->params['controller'] == "Shuttles" && $this->action == "add"):
-?>   
-  window.onload = function(){
-    new JsDatePick({
-      useMode:2,
-      target:"ShuttlePickupDatetime",
-      dateFormat:"%Y-%m-%d"
-      /*selectedDate:{        This is an example of what the full configuration offers.
-        day:5,            For full documentation about these settings please see the full version of the code.
-        month:9,
-        year:2006
-      },
-      yearsRange:[1978,2020],
-      limitToToday:false,
-      cellColorScheme:"beige",
-      dateFormat:"%m-%d-%Y",
-      imgPath:"img/",
-      weekStartDay:1*/
-    });
-    new JsDatePick({
-      useMode:2,
-      target:"ShuttleToDatetime",
-      dateFormat:"%Y-%m-%d"
-      /*selectedDate:{        This is an example of what the full configuration offers.
-        day:5,            For full documentation about these settings please see the full version of the code.
-        month:9,
-        year:2006
-      },
-      yearsRange:[1978,2020],
-      limitToToday:false,
-      cellColorScheme:"beige",
-      dateFormat:"%m-%d-%Y",
-      imgPath:"img/",
-      weekStartDay:1*/
-    }); 
-  };
-
-/****************************************************************************************************************************/
- 
-
-<?php 
-  endif;
-?>
-/****************************************************************************************************************************/
-<?php
-  if($this->params['controller'] == "Cabs" && $this->action == "add"):
-?>   
-  window.onload = function(){
-    new JsDatePick({
-      useMode:2,
-      target:"cabToDatetime",
-      dateFormat:"%Y-%m-%d"
-      /*selectedDate:{        This is an example of what the full configuration offers.
-        day:5,            For full documentation about these settings please see the full version of the code.
-        month:9,
-        year:2006
-      },
-      yearsRange:[1978,2020],
-      limitToToday:false,
-      cellColorScheme:"beige",
-      dateFormat:"%m-%d-%Y",
-      imgPath:"img/",
-      weekStartDay:1*/
-    });
- 
- new JsDatePick({
-      useMode:2,
-      target:"cabPickupDatetime",
-      dateFormat:"%Y-%m-%d"
-      /*selectedDate:{        This is an example of what the full configuration offers.
-        day:5,            For full documentation about these settings please see the full version of the code.
-        month:9,
-        year:2006
-      },
-      yearsRange:[1978,2020],
-      limitToToday:false,
-      cellColorScheme:"beige",
-      dateFormat:"%m-%d-%Y",
-      imgPath:"img/",
-      weekStartDay:1*/
-    });    
-  };
-<?php
- endif;
-?>
-</script>
 </head>
 <body>
 <div class="shell">
@@ -163,14 +43,11 @@
     </div>
     <div id="navigation">       
       <ul>
-        <li><a href="/removal-leads.co.za/" class="label label-primary"><h5><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Residential Moves</h5></a></li>
-        <li><a href="/removal-leads.co.za/Pages/howworks" class="label label-success"><h5><span class="glyphicon glyphicon-tower" aria-hidden="true"></span>Commercial Moves</h5></a></li>
-        <li><a href="/removal-leads.co.za/Pages/contact" class="label label-info"><h5><span class="glyphicon glyphicon-globe" aria-hidden="true"></span>Internation Moves</h5></a></li>
+        <li><a href="/removal-leads.co.za/Pages/homeRes" class="label label-primary"><h5><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Residential Moves</h5></a></li>
+        <li><a href="/removal-leads.co.za/Pages/homeCom" class="label label-success"><h5><span class="glyphicon glyphicon-tower" aria-hidden="true"></span>Commercial Moves</h5></a></li>
+        <li><a href="/removal-leads.co.za/Pages/homeInt" class="label label-info"><h5><span class="glyphicon glyphicon-globe" aria-hidden="true"></span>Internation Moves</h5></a></li>        
+        <li><a href="/removal-leads.co.za/Companies/add" class="label label-default"><h5><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Your Company Listed</h5></a></li>
       </ul>
-      <div class="cl">&nbsp;</div>
-      <div style="position: relative;left: 702px;top:-37px;-moz-border-radius: 60px;-webkit-border-radius: 60px; -khtml-border-radius: 60px; border-radius: 60px; ">
-        <a href="/removal-leads.co.za/Companies/add"><img src="http://localhost/removal-leads.co.za/img/getlisted.gif" style="border: 0;" alt="Get Listed"></a>
-      </div>
     </div>
       <div id="main">
       <div id="content" class="left">
@@ -234,6 +111,11 @@
     </script>
     <?php echo $this->element('sql_dump'); ?>  
   </div>
+  <script type="text/javascript">
+    $('.datepicker').datepicker({
+        format: 'yyyy-mm-dd'
+    })    
+  </script> 
 </div>
 </body>
 </html>

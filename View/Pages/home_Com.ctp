@@ -8,15 +8,16 @@
 <div id="SimpleStepsMamaIndex_area5_pc">
   <div id="QuestionsOnePageControl">
     <div id="validators">
+    <h2>Commercial Move</h2>
     </div>
          To start comparing please select your provices below:
         <div class="QuestionText">
           Moving from:
         </div>
-        <input type="hidden" value="1"  name="data[SaveLead][page]">
+        <input type="hidden" value="2" required='required' name="data[SaveLead][page]">
         <div class="Question">
           <select style="width:300px;" class="btn-info" name="data[SaveLead][from_province]">
-            <option value="0">Please select</option>
+            <option value="">- Please select -</option>
             <option value="17533">Eastern Cape</option>
             <option value="17534">Free State</option>
             <option value="17535">Gauteng</option>
@@ -32,8 +33,8 @@
           Moving to:
         </div>
         <div class="Question">
-          <select style="width:300px;" class="btn-info" name="data[SaveLead][to_province]">
-            <option value="0">Please select</option>
+          <select style="width:300px;" class="btn-info" required='required' name="data[SaveLead][to_province]">
+            <option value="">- Please select -</option>
             <option value="17533">Eastern Cape</option>
             <option value="17534">Free State</option>
             <option value="17535">Gauteng</option>
@@ -61,7 +62,7 @@
     
       </td>
       <td valign="top">
-        <img src="/removal-leads.co.za/img/home-removal.jpg" style="position: relative;left: -55px;" alt="Removals, shuttle services, cab">
+        <img src="/removal-leads.co.za/img/truck.png" alt="Removals, shuttle services, cab">
       </td>
     </tr>
     <tr>

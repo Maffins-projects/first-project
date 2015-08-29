@@ -25,7 +25,7 @@ class SaveLeadsController extends AppController {
 	public $components = array('Paginator', 'Session');
   
   function beforeFilter($options = Array()) {  
-    $this->Auth->allow('initialialize', 'add'); 
+    $this->Auth->allow('initialialize', 'add', 'success', 'addinternational'); 
   } 
    
 /**
@@ -51,9 +51,16 @@ class SaveLeadsController extends AppController {
   public function initialialize() {
     if ($this->request->is('post')) {
       $this->SaveLead->create();
+      $which = $this->request->data['SaveLead']['page'];
+      
       if ($this->SaveLead->save($this->request->data)) {
         $this->Session->setFlash(__('The initial province information has been saved.'));
-        return $this->redirect(array('action' => 'add', $this->SaveLead->id));
+        if ($which == 3) {
+          return $this->redirect(array('action' => 'addinternational', $this->SaveLead->id));     
+        } else {
+          return $this->redirect(array('action' => 'add', $this->SaveLead->id, $which));
+        }
+        
       } else {
         $this->Session->setFlash(__('The save lead could not be saved. Please, try again.'));
       }
@@ -64,10 +71,50 @@ class SaveLeadsController extends AppController {
   
 /**
  * add method
- *
+ *  Saves International leads
  * @return void
  */
-	public function add($id) {
+  public function addinternational($id) {
+    if ($this->request->is('post')) {
+      $this->SaveLead->create();
+       //Save the client details
+       $client['Client']['fname'] = $this->request->data['SaveLead']['fname'];
+       $client['Client']['lname'] = $this->request->data['SaveLead']['lname'];
+       $client['Client']['SaveLead_id'] = $this->request->data['SaveLead']['savelead_id'];
+       $client['Client']['email'] = $this->request->data['SaveLead']['email'];
+       $client['Client']['cellphone'] = $this->request->data['SaveLead']['cellphone'];
+       //Save Client
+       App::import('Model','Client');
+       $anotherModel = new Client();
+       $anotherModel->save($client);
+       $this->request->data['SaveLead']['client_id'] = $anotherModel->id;
+       
+       //Unset the user details
+       unset($this->request->data['SaveLead']['fname']);
+       unset($this->request->data['SaveLead']['lname']);
+       unset($this->request->data['SaveLead']['cellphone']);
+       unset($this->request->data['SaveLead']['email']);
+       
+       //Set the id so you can do an update
+       $this->SaveLead->id = $this->request->data['SaveLead']['savelead_id'];
+       
+      if ($this->SaveLead->save($this->request->data)) {
+        $this->Session->setFlash(__('Your information has been sent to removal companies.'));
+        return $this->redirect(array('action' => 'success', $id));
+      } else {
+        $this->Session->setFlash(__('The save lead could not be saved. Please, try again.'));
+      }
+    }
+    $prov = $this->SaveLead->findAllById($id);     
+    $this->set(compact('id', 'prov'));
+  }
+  
+/**
+ * add method
+ *  Saves residential and commercial leads
+ * @return void
+ */
+	public function add($id, $which) {
 		if ($this->request->is('post')) {
 			$this->SaveLead->create();
        //Save the client details
@@ -78,8 +125,9 @@ class SaveLeadsController extends AppController {
        $client['Client']['cellphone'] = $this->request->data['SaveLead']['cellphone'];
        //Save Client
        App::import('Model','Client');
-       $anotherModel = new AnotherModel();
+       $anotherModel = new Client();
        $anotherModel->save($client);
+       $this->request->data['SaveLead']['client_id'] = $anotherModel->id;
        
        //Unset the user details
        unset($this->request->data['SaveLead']['fname']);
@@ -87,17 +135,43 @@ class SaveLeadsController extends AppController {
        unset($this->request->data['SaveLead']['cellphone']);
        unset($this->request->data['SaveLead']['email']);
        
+       //Set the id so you can do an update
+       $this->SaveLead->id = $this->request->data['SaveLead']['savelead_id'];
+       
 			if ($this->SaveLead->save($this->request->data)) {
-				$this->Session->setFlash(__('The save lead has been saved.'));
-				return $this->redirect(array('action' => 'success'));
+				$this->Session->setFlash(__('Your information has been sent to removal companies.'));
+				return $this->redirect(array('action' => 'success', $id));
 			} else {
+        debug($this->SaveLead->validationErrors); //show validationErrors
+
+         debug($this->SaveLead->getDataSource()->getLog(false, false));die;
 				$this->Session->setFlash(__('The save lead could not be saved. Please, try again.'));
 			}
 		}
     $prov = $this->SaveLead->findAllById($id);     
-		$this->set(compact('id', 'prov'));
+		$this->set(compact('id', 'prov', 'which'));
 	}
 
+  public function success($loadid)
+  {
+    App::uses('CakeEmail', 'Network/Email');  
+    $email = new CakeEmail(); 
+    ini_set('memory_limit', '-1');    
+    
+    //Get the user details
+    $loadDetails = $this->SaveLead->findById($loadid);
+    /*
+    $email->viewVars(array('message' => $loadDetails )); 
+      $email->template('welcome', 'fancy')
+          ->emailFormat('both')
+          ->to($user[0]['users']['email'])
+          ->subject('Request Forwarded Successfully')
+          ->from('info@removal-leads.co.za')
+          ->send();    
+    */                 
+   $this->set(compact('loadDetails'));
+  }  
+  
 /**
  * edit method
  *

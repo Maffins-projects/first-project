@@ -16,7 +16,7 @@ class LeadsentlogsController extends AppController {
 	public $components = array('Paginator');
 
   function beforeFilter($options = Array()) {  
-    $this->Auth->allow('admin_login', 'admin_dash', 'admin_index', 'admin_add', 'admin_edit', 'admin_view', 'admin_logout'); 
+    $this->Auth->allow('admin_login', 'admin_dash', 'admin_payments', 'admin_reports', 'admin_index', 'admin_add', 'admin_edit', 'admin_view', 'admin_logout'); 
     parent::beforeFilter($options = Array());
   }
     
@@ -26,9 +26,21 @@ class LeadsentlogsController extends AppController {
  * @return void
  */
 	public function admin_index() {
-		$this->Leadsentlog->recursive = 0;
-		$this->set('leadsentlogs', $this->Paginator->paginate());
+    $this->loadModel('SaveLead');
+    $leads = $this->SaveLead->find('all', array(
+        'order' => array('SaveLead.created' => 'desc')
+    ));     
+    //print_r($leads);die; 
+		$this->set('leadsentlogs', $leads);
 	}
+  
+  public function admin_reports() {
+    
+  } 
+  
+  public function admin_payments() {
+    
+  } 
 
 /**
  * admin_view method

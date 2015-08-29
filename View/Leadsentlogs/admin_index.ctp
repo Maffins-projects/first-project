@@ -1,37 +1,62 @@
-<div class="leadsentlogs index">
+<div class="SaveLeads index">
+<br />
 	<h2><?php echo __('Leads log'); ?></h2>
+<br />  
 	<table cellpadding="0" cellspacing="0" class="listing">
+  <tr>
+      <th class="first"><?php echo _('Lead Reference'); ?></th>
+      <th><?php echo _('Name'); ?></th>
+      <th><?php echo _('Cellphone'); ?></th>
+      <th><?php echo _('Email'); ?></th>
+      <th><?php echo _('Type of Move'); ?></th>
+      <th><?php echo _('From Province'); ?></th>
+      <th><?php echo _('Status'); ?></th>
+      <th><?php echo _('created'); ?></th>
+      <th class="last"><?php echo __('Actions'); ?></th>
+  </tr>
+  <?php 
+    $array[1] = 'Residential Move';
+    $array[2] = 'Commercial Move';
+    $array[3] = 'International Move';
+    
+    /********************************/
+    $prov[17533] = "Eastern Cape";
+    $prov[17534] = "Free State";
+    $prov[17535] = "Gauteng";
+    $prov[17536] = "KwaZulu-Natal";
+    $prov[17537] = "Limpopo";
+    $prov[17538] = "Mpumalanga";
+    $prov[17539] = "North West";
+    $prov[17540] = "Northern Cape";
+    $prov[17541] = "Western Cape";   
+  ?>
+	<?php foreach ($leadsentlogs as $SaveLead): ?>
+  <?php
+  if ($SaveLead['SaveLead']['move_type'] == 3) {
+     $color = '#FFCC00';
+  } else if ($SaveLead['SaveLead']['move_type'] == 2) {
+     $color = '#CCFFCC';
+  }else {
+     $color = '#6699FF';
+  }
+?>
 	<tr>
-			<th class="first"><?php echo $this->Paginator->sort('id'); ?></th>
-			<th><?php echo $this->Paginator->sort('client_id'); ?></th>
-			<th><?php echo $this->Paginator->sort('campaign_id'); ?></th>
-			<th><?php echo $this->Paginator->sort('lead_type'); ?></th>
-			<th><?php echo $this->Paginator->sort('datesent'); ?></th>
-			<th><?php echo $this->Paginator->sort('leadID'); ?></th>
-			<th><?php echo $this->Paginator->sort('client_reference_id'); ?></th>
-			<th><?php echo $this->Paginator->sort('status'); ?></th>
-			<th><?php echo $this->Paginator->sort('created'); ?></th>
-			<th class="last"><?php echo __('Actions'); ?></th>
-	</tr>
-	<?php foreach ($leadsentlogs as $leadsentlog): ?>
-	<tr>
-		<td><?php echo h($leadsentlog['Leadsentlog']['id']); ?>&nbsp;</td>
-		<td>
-			<?php echo $this->Html->link($leadsentlog['Company']['company_name'], array('controller' => 'clients', 'action' => 'view', $leadsentlog['Company']['id'])); ?>
+		<td style="background-color: <?php echo $color;?>; !important"><?php echo h($SaveLead['SaveLead']['id']); ?>&nbsp;</td>
+		<td style="background-color: <?php echo $color;?>; !important">
+			<?php echo $this->Html->link($SaveLead['Client']['fname']." ".$SaveLead['Client']['lname'], array('controller' => 'clients', 'action' => 'view', $SaveLead['Client']['id'])); ?>
 		</td>
-		<td>
-			<?php echo $this->Html->link($leadsentlog['Campaign']['name'], array('controller' => 'campaigns', 'action' => 'view', $leadsentlog['Campaign']['id'])); ?>
+    <td style="background-color: <?php echo $color;?>; !important">
+      <?php echo $this->Html->link($SaveLead['Client']['cellphone'], array('controller' => 'Client', 'action' => 'view', $SaveLead['Client']['id'])); ?>
+    </td>
+		<td style="background-color: <?php echo $color;?>; !important">
+			<?php echo $this->Html->link($SaveLead['Client']['email'], array('controller' => 'Client', 'action' => 'view', $SaveLead['Client']['id'])); ?>
 		</td>
-		<td><?php echo h($leadsentlog['Leadsentlog']['lead_type']); ?>&nbsp;</td>
-		<td><?php echo h($leadsentlog['Leadsentlog']['datesent']); ?>&nbsp;</td>
-		<td><?php echo h($leadsentlog['Leadsentlog']['leadID']); ?>&nbsp;</td>
-		<td><?php echo h($leadsentlog['Leadsentlog']['client_reference_id']); ?>&nbsp;</td>
-		<td><?php echo h($leadsentlog['Leadsentlog']['status']); ?>&nbsp;</td>
-		<td><?php echo h($leadsentlog['Leadsentlog']['created']); ?>&nbsp;</td>
+		<td style="background-color: <?php echo $color;?>; !important"><?php echo h(@$array[$SaveLead['SaveLead']['move_type']]); ?>&nbsp;</td>
+		<td style="background-color: <?php echo $color;?>; !important"><?php echo h($prov[$SaveLead['SaveLead']['from_province']]); ?>&nbsp;</td>
+    <td style="background-color: <?php echo $color;?>; !important"><?php echo h(''); ?>&nbsp;</td>
+		<td style="background-color: <?php echo $color;?>; !important"><?php echo h($SaveLead['SaveLead']['created']); ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $leadsentlog['Leadsentlog']['id'])); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $leadsentlog['Leadsentlog']['id'])); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $leadsentlog['Leadsentlog']['id']), null, __('Are you sure you want to delete # %s?', $leadsentlog['Leadsentlog']['id'])); ?>
+      <button class="btn btn-primary" style="width: 120px;" onclick="window.location.href='<?php echo Router::url(array('controller'=>'Leadsentlogs', 'action'=>'sendleadclients', $SaveLead['SaveLead']['id']))?>'">Send Lead</button>
 		</td>
 	</tr>
 <?php endforeach; ?>
@@ -41,15 +66,15 @@
 	</table>
 	<p>
 	<?php
-	echo $this->Paginator->counter(array(
-	'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
-	));
+	//echo $this->Paginator->counter(array(
+//	'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
+//	));
 	?>	</p>
 	<div class="paging">
 	<?php
-		echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
-		echo $this->Paginator->numbers(array('separator' => ''));
-		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
+		//echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
+		//echo $this->Paginator->numbers(array('separator' => ''));
+		//echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
 	?>
 	</div>
 </div>
@@ -60,7 +85,5 @@
 	<ul>
 		<li><?php echo $this->Html->link(__('List Clients'), array('controller' => 'clients', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Client'), array('controller' => 'clients', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Campaigns'), array('controller' => 'campaigns', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Campaign'), array('controller' => 'campaigns', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

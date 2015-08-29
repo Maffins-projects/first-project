@@ -3,16 +3,9 @@ App::uses('AppModel', 'Model');
 /**
  * Load Model
  *
- * @property User $User
+ * @property SaveLead $SaveLead
  */
 class SaveLead extends AppModel {    
-
-  //This function returns the user thats just requested a quote
-  public function getUser($userid)
-  {
-    $query = "select * from users where id = {$userid}";
-    return $this->query($query);
-  }   
   
 /**
  * Validation rules
@@ -20,7 +13,7 @@ class SaveLead extends AppModel {
  * @var array
  */
 	public $validate = array(
-		'user_id' => array(
+		'SaveLead_id' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
@@ -190,9 +183,9 @@ class SaveLead extends AppModel {
  * @var array
  */
 	public $belongsTo = array(
-		'User' => array(
-			'className' => 'User',
-			'foreignKey' => 'user_id',
+		'Client' => array(
+			'className' => 'Client',
+			'foreignKey' => 'client_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''

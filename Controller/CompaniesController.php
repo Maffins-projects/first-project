@@ -8,7 +8,7 @@ App::uses('AppController', 'Controller');
 class CompaniesController extends AppController {
 
   function beforeFilter($options = Array()) {  
-    $this->Auth->allow('admin_login', 'admin_dash', 'admin_index', 'admin_add', 'admin_edit', 'admin_view', 'add', 'view'); 
+    $this->Auth->allow('admin_login', 'admin_dash', 'admin_setleadsadd', 'admin_setleads', 'admin_suspend', 'admin_index', 'admin_add', 'admin_edit', 'admin_view', 'add', 'view'); 
     parent::beforeFilter($options = Array());
   }  
 
@@ -78,26 +78,50 @@ class CompaniesController extends AppController {
 	}
 
 /**
- * delete method
+ * setleads method
  *
- * @param string $id
  * @return void
  */
-	public function delete($id = null) {
-		if (!$this->request->is('post')) {
-			throw new MethodNotAllowedException();
-		}
-		$this->Company->id = $id;
-		if (!$this->Company->exists()) {
-			throw new NotFoundException(__('Invalid company'));
-		}
-		if ($this->Company->delete()) {
-			$this->Session->setFlash(__('Company deleted'));
-			$this->redirect(array('action' => 'index'));
-		}
-		$this->Session->setFlash(__('Company was not deleted'));
-		$this->redirect(array('action' => 'index'));
+  public function admin_setleads() {
+    $this->loadModel('Leadsplan');
+    $plans = $this->Leadsplan->find('all');
+    $this->set(compact('plans'));
+  }
+  
+/**
+ * setleadsadd method
+ *
+ * @return void
+ */
+  public function admin_setleadsadd() {
+
+    //Get all the active companies.
+    $companies = $this->Company->find('all', array(
+                       'conditions' => array('Company.status =' => 'Active') 
+                      ));
+    $company[0] = '- Please Select -';                  
+    //Build an options array of companies
+    foreach($companies as $comp) {
+      $company[$comp['Company']['id']] = $comp['Company']['company_name'];
+    }                  
+    $this->set(compact('company'));
+  }
+  
+/**
+ * sendleadclients method
+ *  todo: for now the process of sending will be manual automate later to use a cron
+ * @return void
+ */
+	public function admin_sendleadclients($lead_id) {
+   /**
+   * Check what type of lead it is
+   * Check the province the lead is from
+   * Get the companies in that province get 5 for now
+   * and get them randomly
+   * Compose an email with all the details of the client
+   */
 	}
+  
 /**
  * admin_index method
  *
@@ -163,12 +187,12 @@ class CompaniesController extends AppController {
 	}
 
 /**
- * admin_delete method
+ * admin_suspend method
  *
  * @param string $id
  * @return void
  */
-	public function admin_delete($id = null) {
+	public function admin_suspend($id = null) {
 		if (!$this->request->is('post')) {
 			throw new MethodNotAllowedException();
 		}
@@ -176,11 +200,20 @@ class CompaniesController extends AppController {
 		if (!$this->Company->exists()) {
 			throw new NotFoundException(__('Invalid company'));
 		}
-		if ($this->Company->delete()) {
-			$this->Session->setFlash(__('Company deleted'));
+    $company = $this->Company->read('status', $id); 
+    $updateStatus = '';
+    if($company['Company']['status'] == 'Active') {
+      $updateStatus = 'Suspended';
+    } else {
+      $updateStatus = 'Active';
+    }
+    $this->Company->set('status', $updateStatus);
+   
+		if ($this->Company->save()) {
+			$this->Session->setFlash(__('Company suspended successfully'));
 			$this->redirect(array('action' => 'index'));
-		}
-		$this->Session->setFlash(__('Company was not deleted'));
+		}       
+		$this->Session->setFlash(__('Company was not suspended'));
 		$this->redirect(array('action' => 'index'));
 	}
 }

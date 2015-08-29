@@ -5,137 +5,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <?php
   echo $this->Html->meta('icon');
-
+  echo $this->Html->css('bootstrap-select.min');
+  echo $this->Html->css('bootstrap');
+  echo $this->Html->css('bootstrap.min');
+  echo $this->Html->css('bootstrap.icon-large.min');
   echo $this->Html->css('admin');
-  echo $this->Html->css('jsDatePick_ltr.min');
-
+  echo $this->Html->css('bootstrap-datepicker.min');
+  echo $this->Html->css('bootstrap-datepicker.standalone.min');
   echo $this->fetch('meta');
-  echo $this->Html->script('jquery-1.4.2.min');
-  //echo $this->Html->script('jquery.jcarousel.pack.min');
- // echo $this->Html->script('jquery.uniform.min');
-  
+  echo $this->Html->script('jquery-1.11.3.min');
+  echo $this->Html->script('bootstrap.min');  
   echo $this->Html->script('jsDatePick.jquery.min.1.3') ;
-
+  echo $this->Html->script('bootstrap-datepicker.min') ;
 ?>
-<script type="text/javascript" charset="utf-8">
-  $(function(){
-   // $("input:checkbox, input:radio, input:file, select").uniform();
-  });
-</script>
-<script type="text/javascript">
-<?php
-  if($this->params['controller'] == "Loads" && $this->action == "add"):
+
 ?> 
-  window.onload = function(){
-    new JsDatePick({
-      useMode:2,
-      target:"LoadMoveDate",
-      dateFormat:"%Y-%m-%d"
-      /*selectedDate:{        This is an example of what the full configuration offers.
-        day:5,            For full documentation about these settings please see the full version of the code.
-        month:9,
-        year:2006
-      },
-      yearsRange:[1978,2020],
-      limitToToday:false,
-      cellColorScheme:"beige",
-      dateFormat:"%m-%d-%Y",
-      imgPath:"img/",
-      weekStartDay:1*/
-    }); 
-  };
-<?php 
-  endif;
-?>  
-/****************************************************************************************************************************/
-<?php       
-  if($this->params['controller'] == "Shuttles" && $this->action == "add"):
-?>   
-  window.onload = function(){
-    new JsDatePick({
-      useMode:2,
-      target:"ShuttlePickupDatetime",
-      dateFormat:"%Y-%m-%d"
-      /*selectedDate:{        This is an example of what the full configuration offers.
-        day:5,            For full documentation about these settings please see the full version of the code.
-        month:9,
-        year:2006
-      },
-      yearsRange:[1978,2020],
-      limitToToday:false,
-      cellColorScheme:"beige",
-      dateFormat:"%m-%d-%Y",
-      imgPath:"img/",
-      weekStartDay:1*/
-    });
-  };
-
-/****************************************************************************************************************************/
- 
-  window.onload = function(){
-    new JsDatePick({
-      useMode:2,
-      target:"ShuttleToDatetime",
-      dateFormat:"%Y-%m-%d"
-      /*selectedDate:{        This is an example of what the full configuration offers.
-        day:5,            For full documentation about these settings please see the full version of the code.
-        month:9,
-        year:2006
-      },
-      yearsRange:[1978,2020],
-      limitToToday:false,
-      cellColorScheme:"beige",
-      dateFormat:"%m-%d-%Y",
-      imgPath:"img/",
-      weekStartDay:1*/
-    });
-  };
-<?php 
-  endif;
-?>
-/****************************************************************************************************************************/
-<?php
-  if($this->params['controller'] == "Cabs" && $this->action == "add"):
-?>   
-  window.onload = function(){
-    new JsDatePick({
-      useMode:2,
-      target:"cabToDatetime",
-      dateFormat:"%Y-%m-%d"
-      /*selectedDate:{        This is an example of what the full configuration offers.
-        day:5,            For full documentation about these settings please see the full version of the code.
-        month:9,
-        year:2006
-      },
-      yearsRange:[1978,2020],
-      limitToToday:false,
-      cellColorScheme:"beige",
-      dateFormat:"%m-%d-%Y",
-      imgPath:"img/",
-      weekStartDay:1*/
-    });
- 
- new JsDatePick({
-      useMode:2,
-      target:"cabPickupDatetime",
-      dateFormat:"%Y-%m-%d"
-      /*selectedDate:{        This is an example of what the full configuration offers.
-        day:5,            For full documentation about these settings please see the full version of the code.
-        month:9,
-        year:2006
-      },
-      yearsRange:[1978,2020],
-      limitToToday:false,
-      cellColorScheme:"beige",
-      dateFormat:"%m-%d-%Y",
-      imgPath:"img/",
-      weekStartDay:1*/
-    });    
-  };
-<?php
- endif;
-?>
-</script>
 </head>
 <body>
 <div class="shell">
@@ -151,12 +35,11 @@
     </div>
     <div id="navigation">
       <ul>
-        <li><a href="/removal-leads.co.za/admin/Companies/index">Clients</a></li>
+        <li><a href="/removal-leads.co.za/admin/Companies/index">Companies</a></li>
         <li><a href="/removal-leads.co.za/admin/Leadsentlogs/index">Leads</a></li>
-        <li><a href="/removal-leads.co.za/admin/Campaigns/index">Campains</a></li>
-        <li><a href="/removal-leads.co.za/admin/Loads/index">Loads</a></li>
-        <li><a href="/removal-leads.co.za/admin/Cabs/index">Cabs</a></li>
-        <li><a href="/removal-leads.co.za/admin/Shuttles/index">Shuttles</a></li>
+        <li><a href="/removal-leads.co.za/admin/Companies/setleads">Set Leads</a></li>
+        <li><a href="/removal-leads.co.za/admin/Leadsentlogs/reports">Reports</a></li>
+        <li><a href="/removal-leads.co.za/admin/Leadsentlogs/payments">Payments</a></li>
         <li>
           <?php 
             $user = $this->Session->read('Admins');    
@@ -180,6 +63,11 @@
     <div class="cl"></div>
     <?php echo $this->element('sql_dump'); ?>  
   </div>
+  <script type="text/javascript">
+    $('.datepicker').datepicker({
+        format: 'yyyy-mm-dd'
+    })    
+  </script>   
 </div>
 </body>
 </html>

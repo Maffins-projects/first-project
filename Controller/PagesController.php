@@ -46,7 +46,7 @@ class PagesController extends AppController {
  *	or MissingViewException in debug mode.
  */
    function beforeFilter($options = Array()) {  
-    $this->Auth->allow('howworks', 'contact', 'display', 'home', 'advisor', 'sitemap', 'verification', 'terms', 'privacy'); 
+    $this->Auth->allow('howworks', 'homeRes', 'homeCom', 'homeInt', 'contact', 'display', 'home', 'advisor', 'sitemap', 'verification', 'terms', 'privacy'); 
    // parent::beforeFilter($options = Array());
   }
 	public function display() {
@@ -88,6 +88,9 @@ class PagesController extends AppController {
  public function verification() {}
  public function terms() {}
  public function privacy() {}
+ public function homeRes() {}
+ public function homeCom() {}
+ public function homeInt() {}
   
   public function home()
   {
